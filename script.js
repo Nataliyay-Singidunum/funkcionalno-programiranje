@@ -48,7 +48,7 @@ const player = new Player({
                     onComplete: () => {
                         level++;
 
-                        if (level === 4){
+                        if (level === 7){
                             level = 1;
                         }
                         levels[level].init();
@@ -66,13 +66,16 @@ const player = new Player({
 });
 
 
-let level = 1;
+let level = 1z;
 let levels = {
     1: {
         init: () => {
             parsedCollisions = collisionsLevel1.parse2D();
             collisionBlocks = parsedCollisions.createObjectsFrom2D();
             player.collisionBlocks = collisionBlocks;
+
+            player.position.x = 80;
+            player.position.y = 200;
 
             if (player.currentAnimation) {
                 player.currentAnimation.isActive = false;
@@ -106,6 +109,7 @@ let levels = {
             parsedCollisions = collisionsLevel2.parse2D();
             collisionBlocks = parsedCollisions.createObjectsFrom2D();
             player.collisionBlocks = collisionBlocks;
+
             player.position.x = 20;
             player.position.y = 64;
 
@@ -140,6 +144,7 @@ let levels = {
             parsedCollisions = collisionsLevel3.parse2D();
             collisionBlocks = parsedCollisions.createObjectsFrom2D();
             player.collisionBlocks = collisionBlocks;
+
             player.position.x = 760;
             player.position.y = 120;
 
@@ -159,6 +164,111 @@ let levels = {
                     position: {
                         x: 176,
                         y: 335
+                    },
+                    imageSrc: "./public/img/doorOpen.png",
+                    frameRate: 5,
+                    frameBuffer: 20,
+                    loop: false,
+                    autoplay: false
+                }),
+            ]
+        }
+    },
+    4: {
+        init: () => {
+            parsedCollisions = collisionsLevel4.parse2D();
+            collisionBlocks = parsedCollisions.createObjectsFrom2D();
+            player.collisionBlocks = collisionBlocks;
+
+            player.position.x = 140;
+            player.position.y = 360;
+
+            if (player.currentAnimation){
+                player.currentAnimation.isActive = false;
+            }
+
+            background = new Sprite({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                imageSrc: "./public/img/backgroundLevel4.png"
+            })
+            doors = [
+                new Sprite({
+                    position: {
+                        x: 768,
+                        y: 192 - 112
+                    },
+                    imageSrc: "./public/img/doorOpen.png",
+                    frameRate: 5,
+                    frameBuffer: 20,
+                    loop: false,
+                    autoplay: false
+                }),
+            ]
+        }
+    },
+    5: {
+        init: () => {
+            parsedCollisions = collisionsLevel5.parse2D();
+            collisionBlocks = parsedCollisions.createObjectsFrom2D();
+            player.collisionBlocks = collisionBlocks;
+
+            player.position.x = 850;
+            player.position.y = 300;
+
+            if (player.currentAnimation){
+                player.currentAnimation.isActive = false;
+            }
+
+            background = new Sprite({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                imageSrc: "./public/img/backgroundLevel5.png"
+            })
+            doors = [
+                new Sprite({
+                    position: {
+                        x: 82,
+                        y: 512 - 112
+                    },
+                    imageSrc: "./public/img/doorOpen.png",
+                    frameRate: 5,
+                    frameBuffer: 20,
+                    loop: false,
+                    autoplay: false
+                }),
+            ]
+        }
+    },
+    6: {
+        init: () => {
+            parsedCollisions = collisionsEnd.parse2D();
+            collisionBlocks = parsedCollisions.createObjectsFrom2D();
+            player.collisionBlocks = collisionBlocks;
+
+            player.position.x = 280;
+            player.position.y = 200;
+
+            if (player.currentAnimation){
+                player.currentAnimation.isActive = false;
+            }
+
+            background = new Sprite({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                imageSrc: "./public/img/End.png"
+            })
+            doors = [
+                new Sprite({
+                    position: {
+                        x: 605,
+                        y: 272
                     },
                     imageSrc: "./public/img/doorOpen.png",
                     frameRate: 5,
@@ -196,7 +306,7 @@ const overlay = {
 
 // animation loop
 function animate() {
-    window.requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);  // rekurzija
 
     background.draw();
     collisionBlocks.forEach(collisionBlock => {
