@@ -1,6 +1,6 @@
 class Player extends Sprite{
-    constructor({collisionBlocks = [], imageSrc, frameRate}) {
-        super({imageSrc, frameRate});
+    constructor({collisionBlocks = [], imageSrc, frameRate, animations, loop}) {
+        super({imageSrc, frameRate, animations, loop});
 
         this.position = {
             x: 200,
@@ -38,6 +38,42 @@ class Player extends Sprite{
         this.checkForVerticalCollisions();
     }
 
+    handleInput(keys){
+        if(this.preventInput) {
+            return
+        }
+        this.velocity.x = 0;
+        if(keys.d.pressed || keys.arrowRight.pressed) {
+            this.switchSprite("runRight");
+            this.velocity.x = 4;
+            this.lastDirection = "right";
+        } else if(keys.a.pressed || keys.arrowLeft.pressed) {
+            this.switchSprite("runLeft");
+            this.velocity.x = -4;
+            this.lastDirection = "left";
+        } else {
+            if(this.lastDirection === "left"){
+                this.switchSprite("idleLeft");
+            } else{
+                this.switchSprite("idleRight");
+            }
+        }
+    }
+
+
+    switchSprite(spriteName) {
+        if(this.image === this.animations[spriteName].image) {
+            return;
+        }
+        this.currentFrame = 0;
+        this.image = this.animations[spriteName].image;
+        this.frameRate = this.animations[spriteName].frameRate;
+        this.frameBuffer = this.animations[spriteName].frameBuffer;
+        this.loop = this.animations[spriteName].loop;
+        this.currentAnimation = this.animations[spriteName];
+    }
+
+
     updateHitbox(){
         this.hitbox = {
             position: {
@@ -50,8 +86,8 @@ class Player extends Sprite{
         // DEBUG player real hitbox
         // c.fillStyle = "rgba(0, 255, 0, 0.3)";
         // c.fillRect(this.hitbox.position.x, this.hitbox.position.y, this.hitbox.width, this.hitbox.height);
-
     }
+
 
     checkForHorizontalCollisions(){
         // horizontal collisions
@@ -111,6 +147,5 @@ class Player extends Sprite{
             }
         }
     }
-
 
 }
