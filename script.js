@@ -66,7 +66,7 @@ const player = new Player({
 });
 
 
-let level = 1z;
+let level = 1;
 let levels = {
     1: {
         init: () => {
